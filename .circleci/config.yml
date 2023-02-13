@@ -16,7 +16,7 @@ jobs:
   
   create_infrastructure:
     docker:
-      - image: amazon/aws-cli
+      - image: cimg/aws:2023.01
       steps:
         - checkout
         - run:
