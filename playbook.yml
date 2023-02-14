@@ -1,0 +1,7 @@
+---
+- name: setting up web sever
+  host: all
+  user:
+  become: yes
+  roles:
+    - setup
