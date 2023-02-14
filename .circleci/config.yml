@@ -17,18 +17,18 @@ jobs:
   configure_infrastructure:
     docker:
       - image: python:3.7-alpine3.11
-      steps:
-        - checkout
-        - add_ssh_keys:
-            fingerprints: ["82:4b:a0:8e:a4:2a:7a:ca:b1:b2:f9:29:8a:4a:12:2c"]
-        - run:
-            name: Install dependencies
-            command: |
-              apk add --update ansible # install the dependencies
-        - run:
-            name: Configure Server
-            command: |
-              ansible-playbook -i inventory.txt playbook.yml
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints: ["82:4b:a0:8e:a4:2a:7a:ca:b1:b2:f9:29:8a:4a:12:2c"]
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --update ansible # install the dependencies
+      - run:
+          name: Configure Server
+          command: |
+            ansible-playbook -i inventory.txt playbook.yml
 
 
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
