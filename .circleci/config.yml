@@ -4,6 +4,29 @@ version: 2.1
 orbs:
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
+# Exercise - Rollback
+
+commands:
+  # Exercise: Reusable Job Code
+  print_pipeline_id:
+    parameters:
+      id: 
+        type: string
+    steps:
+      - run: echo << parameters.id >>
+
+  # Exercise - Rollback
+  destroy_environment:
+    steps:
+      - run:
+          name: Destroy environment
+          # ${CIRCLE_WORKFLOW_ID} is a Built-in environment variable 
+          # ${CIRCLE_WORKFLOW_ID:0:5} takes the first 5 chars of the variable CIRCLE_CI_WORKFLOW_ID 
+          when: on_fail
+          command: |
+            aws cloudformation delete-stack --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5}
+
+
 jobs:
   create_infrastructure:
     docker:
@@ -21,7 +44,7 @@ jobs:
     steps:
       - checkout
       - add_ssh_keys:
-          fingerprints: ["82:4b:a0:8e:a4:2a:7a:ca:b1:b2:f9:29:8a:4a:12:2c"]
+          fingerprints: ["b9:fa:82:79:11:fc:50:5e:1e:32:fc:cd:14:5d:7e:97"]
       - run:
           name: Install dependencies
           command: |
@@ -54,8 +77,8 @@ jobs:
 workflows:
   myWorkflow:
     jobs:
-      # - create_infrastructure
-      # - configure_infrastructure:
-      #     requires:
-      #       - create_infrastructure
-      - smoke_test
+      - create_infrastructure
+      - configure_infrastructure:
+          requires:
+            - create_infrastructure
+      # - smoke_test
