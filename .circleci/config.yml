@@ -37,5 +37,6 @@ workflows:
   myWorkflow:
     jobs:
       - create_infrastructure:
+      - configure_infrastructure
           requires:
-            - configure_infrastructure
+            - create_infrastructure
