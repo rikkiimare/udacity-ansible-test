@@ -1,6 +1,6 @@
 ---
 - name: setting up web sever
-  host: 52.73.248.179
+  host: all
   user:
   become: yes
   roles:
