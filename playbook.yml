@@ -1,7 +1,7 @@
 ---
 - name: setting up web sever
-  host: all
-  user:
+  hosts: all
+  user: ubuntu
   become: yes
   roles:
     - setup
