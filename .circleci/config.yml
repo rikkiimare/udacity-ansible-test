@@ -17,6 +17,8 @@ commands:
 
   # Exercise - Rollback
   destroy_environment:
+      docker:
+      - image: cimg/aws:2023.01
     steps:
       - run:
           name: Destroy environment
