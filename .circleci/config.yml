@@ -41,7 +41,7 @@ jobs:
             --region us-east-1 --template-body file://template.yml
       - run: return 1
       - destroy_environment
-        when: on_fail
+          when: on_fail
   
   configure_infrastructure:
     docker:
