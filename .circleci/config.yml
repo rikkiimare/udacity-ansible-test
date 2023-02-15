@@ -24,7 +24,7 @@ commands:
           # ${CIRCLE_WORKFLOW_ID:0:5} takes the first 5 chars of the variable CIRCLE_CI_WORKFLOW_ID 
           when: on_fail
           command: |
-            aws cloudformation delete-stack --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5}
+            aws cloudformation delete-stack --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:7}
 
 
 jobs:
@@ -35,7 +35,7 @@ jobs:
       - checkout
       - run:
           name: Create Cloudformation Stack
-          command: aws cloudformation create-stack  --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5}
+          command: aws cloudformation create-stack  --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:7}
             --region us-east-1 --template-body file://template.yml
   
   configure_infrastructure:
@@ -72,15 +72,24 @@ jobs:
               return 1
             fi
 
-
+  smoke_test1:
+    docker:
+      - image: alpine:latest
+    steps:
+      - run: 
+          name: smoke testing
+          command: return 1
+      - destroy_environment
 
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
   myWorkflow:
     jobs:
-      #- create_infrastructure
-      - configure_infrastructure
+      - create_infrastructure
+      #- configure_infrastructure
       # - configure_infrastructure:
           # requires:
           #   - create_infrastructure
-      # - smoke_test
+      - smoke_test1:
+          requires:
+            - create_infrastructure
