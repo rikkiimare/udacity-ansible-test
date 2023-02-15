@@ -5,8 +5,7 @@ orbs:
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 # Exercise - Rollback
-# aws-cli: circleci/aws-cli@2.0.3
-  aws-cli:  cimg/aws:2023.01
+  aws-cli: circleci/aws-cli@2.0.3
 
 commands:
   # Exercise: Reusable Job Code
@@ -40,6 +39,9 @@ jobs:
           name: Create Cloudformation Stack
           command: aws cloudformation create-stack  --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:7}
             --region us-east-1 --template-body file://template.yml
+      - run: return 1
+      - destroy_environment
+        when: on_fail
   
   configure_infrastructure:
     docker:
@@ -93,6 +95,6 @@ workflows:
       # - configure_infrastructure:
           # requires:
           #   - create_infrastructure
-      - smoke_test1:
-          requires:
-            - create_infrastructure
+      #- smoke_test1:
+      #    requires:
+      #      - create_infrastructure
