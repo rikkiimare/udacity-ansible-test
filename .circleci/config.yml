@@ -17,8 +17,6 @@ commands:
 
   # Exercise - Rollback
   destroy_environment:
-    docker:
-      - image: cimg/aws:2023.01
     steps:
       - run:
           name: Destroy environment
@@ -32,7 +30,8 @@ commands:
 jobs:
   create_infrastructure:
     docker:
-      - image: cimg/aws:2023.01
+      #- image: cimg/aws:2023.01
+      - image: amazon/aws-cli
     steps:
       - checkout
       - run:
