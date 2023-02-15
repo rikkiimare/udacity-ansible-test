@@ -45,7 +45,7 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints: 
-            - "b9:fa:82:79:11:fc:50:5e:1e:32:fc:cd:14:5d:7e:97"
+            - "df:d4:27:43:6f:dc:01:ea:99:ec:ab:03:34:a3:60:38"
       - run:
           name: Install dependencies
           command: |
@@ -78,8 +78,8 @@ jobs:
 workflows:
   myWorkflow:
     jobs:
-      - create_infrastructure
-      #- configure_infrastructure
+      #- create_infrastructure
+      - configure_infrastructure
       # - configure_infrastructure:
           # requires:
           #   - create_infrastructure
